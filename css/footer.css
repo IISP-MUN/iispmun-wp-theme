@@ -1,0 +1,229 @@
+#footer {
+    background: var(--dark-purple);
+    padding: 30px 5%;
+}
+
+#footer header {
+    padding: 0;
+}
+
+#footer .logo-title,
+#footer .logo-title span {
+    color: #fff;
+}
+
+#footer .logo-subtitle {
+    color: var(--lightest-purple);
+}
+
+#footer .logo-shorttitle,
+#footer .logo-shorttitle span {
+    color: #fff;
+}
+
+.school-logos-container {
+    display: flex;
+}
+
+.school-logos-container .logo {
+    margin: 0 10px;
+}
+
+.mid-footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin: 30px 0;
+}
+
+.footer-navigation-menu ul {
+    display: flex;
+    padding: 0;
+    list-style: none;
+}
+
+#footer .menu > li {
+    margin: 0 30px;
+}
+
+#footer .menu > li > a {
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+#footer .sub-menu {
+    flex-direction: column;
+    margin-top: 15px;
+    color: var(--light-purple);
+}
+
+#footer .sub-menu li {
+    margin: 3px 0;
+    font-size: 13px;
+    font-weight: 200;
+}
+
+.social-media-container {
+    display: flex;
+    justify-content: right;
+    margin: 10px 0;
+}
+
+.social-media-container div {
+    aspect-ratio: 1;
+    height: 35px;
+    margin-left: 10px;
+    padding: 5px;
+
+    background: #fff;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+}
+
+.social-media-container div:hover {
+    transform: scale(1.1);
+}
+
+.social-media-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.footer-info-container {
+    text-align: right;
+    font-size: 13px;
+}
+
+#footer .email {
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+#footer .address {
+    color: var(--lightest-purple);
+    font-weight: 200;
+}
+
+#footer > div:last-child {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+}
+
+.copyright {
+    color: var(--light-purple);
+}
+
+.legal-container {
+    color: var(--lightest-purple);
+    display: flex;
+    justify-content: center;
+    font-weight: 300;
+}
+
+.legal-container div {
+    margin-left: 15px;
+}
+
+@media(max-width: 992px) {
+    #footer .logo-title {
+        display: block;
+    }
+
+    #footer .logo-subtitle {
+        display: block;
+    }
+
+    #footer .logo-shorttitle {
+        display: none;
+    }
+
+    .mid-footer-container {
+        flex-direction: column;
+    }
+
+    .email {
+        text-align: left;
+    }
+
+    .social-media-container {
+        justify-content: left;
+    }
+
+    .social-media-container div {
+        margin-right: 10px;
+        margin-left: 0;
+    }
+
+    .footer-info-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-top: 20px;
+    }
+}
+
+@media(max-width: 745px) {
+    #footer .logo-title {
+        display: none;
+    }
+
+    #footer .logo-subtitle {
+        display: none;
+    }
+
+    #footer .logo-shorttitle {
+        display: block;
+    }
+
+    .address {
+        font-size: 12px;
+    }
+}
+
+@media(max-width: 576px) {
+    #countries h2 {
+        font-size: 20px !important;
+    }
+
+    .footer-navigation-menu {
+        width: 100%;
+    }
+
+    .footer-navigation-menu ul {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #footer .menu > li {
+        margin-bottom: 20px;
+    }
+}
+
+@media(max-width: 480px) {
+    #footer .logo-shorttitle {
+        display: none;
+    }
+
+    .footer-info-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .email {
+        text-align: center;
+    }
+
+    #footer > div:last-child {
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+
+    .legal-container div {
+        margin-right: 15px;
+    }
+}

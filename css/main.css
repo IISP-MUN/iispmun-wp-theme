@@ -1,0 +1,50 @@
+:root {
+    --lightest-purple: #A8A8BF;
+    --light-purple: #71718D;
+    --purple: #3C3C4F;
+    --dark-purple: #20202E;
+    --darkest-purple: #121219;
+
+    --light-green: #74B461;
+    --yellow: #FFCC66;
+    --blue: #3BA3E8;
+}
+
+img {
+    user-select: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: inherit;
+}
+
+a:focus {
+    outline-color: var(--light-green);
+    outline-offset: 5px;
+}
+
+p {
+    text-align: justify;
+    color: #ccc;
+    line-height: 30px;
+    font-size: 14px;
+}
+
+h1 {
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--purple);
+
+    margin-bottom: 30px;
+}
+
+h3 {
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--dark-purple);
+}
