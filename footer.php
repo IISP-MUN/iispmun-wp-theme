@@ -37,19 +37,29 @@
     <div class="mid-footer-container">
         <div class="footer-navigation-menu">
             <?php
-            wp_nav_menu(
-                array(
-                    "menu" => get_field( "footer_navigation_menu", get_field( "edition" ) ),
-                    "depth" => 2
-                )
-            );
+            if ( get_field( "edition" ) ) {
+                wp_nav_menu(
+                    array(
+                        "menu" => get_field("footer_navigation_menu", get_field("edition")),
+                        "depth" => 2
+                    )
+                );
+            } else {
+                wp_nav_menu(
+                    array(
+                        "theme_location" => "footer-default",
+                        "depth" => 2
+                    )
+                );
+            }
             ?>
         </div>
         <div class="footer-info-container">
             <div>
                 <div class="social-media-container">
                     <?php
-                    foreach ( get_field( "socials", get_field( "edition" ) ) as $platform ) {?>
+                    $socials_source = get_field( "edition" ) ?: 'menu_' . get_nav_menu_locations()[ "footer-default" ];
+                    foreach ( get_field( "socials", $socials_source ) as $platform ) {?>
                         <a href="<?php the_field( "url", $platform );?>">
                             <div>
                                 <img src="<?php the_field( "icon", $platform );?>">

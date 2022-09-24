@@ -29,11 +29,21 @@
     </div>
 
     <?php
-    wp_nav_menu(
+    if ( get_field( "edition" ) ) {
+        wp_nav_menu(
+                array(
+                    "menu" => get_field( "header_navigation_menu", get_field( "edition" ) ),
+                    "depth" => 2
+                )
+        );
+    }
+    else {
+        wp_nav_menu(
             array(
-                "menu" => get_field( "header_navigation_menu", get_field( "edition" ) ),
+                "theme_location" => "header-default" ,
                 "depth" => 2
             )
-    );
+        );
+    }
     ?>
 </header>

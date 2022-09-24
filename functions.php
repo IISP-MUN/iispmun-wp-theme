@@ -7,8 +7,27 @@ function load_styles_and_scripts()
     wp_enqueue_style( "header", get_template_directory_uri() . "/css/header.css" );
     wp_enqueue_style( "footer", get_template_directory_uri() . "/css/footer.css" );
 
-    if ( get_post_type() == "iispmun_editions" ) {
+    if ( is_front_page() or get_post_type() == "iispmun_editions" ) {
         wp_enqueue_style( "single-edition", get_template_directory_uri() . "/css/single-iispmun_editions.css" );
+        wp_enqueue_style( "committees", get_template_directory_uri() . "/css/committees.css" );
+        wp_enqueue_style( "post-preview", get_template_directory_uri() . "/css/post-preview.css" );
+    }
+    elseif ( is_home() ) {
+        wp_enqueue_style( "post-preview", get_template_directory_uri() . "/css/post-preview.css" );
+        wp_enqueue_style( "home", get_template_directory_uri() . "/css/home.css" );
+    }
+    elseif ( get_post_type() == "iispmun_committees" ) {
+        wp_enqueue_style( "single-committee", get_template_directory_uri() . "/css/single-iispmun_committees.css" );
+        wp_enqueue_style( "committees-archive", get_template_directory_uri() . "/css/committees-archive.css" );
+        wp_enqueue_style( "committees", get_template_directory_uri() . "/css/committees.css" );
+        wp_enqueue_style( "single", get_template_directory_uri() . "/css/single.css" );
+    }
+    elseif ( is_single() ) {
+        wp_enqueue_style( "single", get_template_directory_uri() . "/css/single.css" );
+    }
+    elseif ( is_page_template( "templates/committees.php" ) ) {
+        wp_enqueue_style( "committees-archive", get_template_directory_uri() . "/css/committees-archive.css" );
+        wp_enqueue_style( "committees", get_template_directory_uri() . "/css/committees.css" );
     }
 
     wp_enqueue_script("jquery");
@@ -50,7 +69,7 @@ function load_custom_post_types()
             "public" => true,
             "menu_icon" => "dashicons-tickets-alt",
             "supports" => array( "custom-fields", "title" ),
-            "has_archive" => true,
+            "has_archive" => false,
             "rewrite" => array( "slug" => "mun" ),
         )
     );
@@ -87,7 +106,8 @@ function load_custom_post_types()
             "description" => "All the committees of the IISP MUN",
             "public" => true,
             "menu_icon" => "dashicons-admin-site",
-            "supports" => array( "custom-fields", "title" ),
+            "supports" => array( "custom-fields", "title", "thumbnail" ),
+            "has_archive" => false,
             "rewrite" => array( "slug" => "committees" )
         )
     );
@@ -126,6 +146,7 @@ function load_custom_post_types()
             "exclude_from_search" => true,
             "publicly_queryable" => false,
             "menu_icon" => "dashicons-share",
+            "has_archive" => false,
             "supports" => array( "custom-fields", "title" ),
         )
     );
@@ -163,7 +184,17 @@ function load_custom_post_types()
             "public" => true,
             "menu_icon" => "dashicons-businessperson",
             "supports" => array( "custom-fields", "title" ),
+            "has_archive" => false,
             "rewrite" => array( "slug" => "people" )
+        )
+    );
+}
+
+function register_menus() {
+    register_nav_menus(
+        array(
+            "header-default" => ( "Default Header Menu" ),
+            "footer-default" => ( "Default Footer Menu" )
         )
     );
 }
@@ -175,7 +206,13 @@ function remove_admin_bar()
 
 add_action( "wp_enqueue_scripts", "load_styles_and_scripts" );
 add_action( "init", "load_custom_post_types");
+add_action( "init", "register_menus");
 add_action( "after_setup_theme", "remove_admin_bar" );
+
+function filter_ptags_on_images($content){
+    return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
+}
+add_filter( 'the_content', 'filter_ptags_on_images' );
 
 add_theme_support( "menus" );
 add_theme_support( "custom-logo" );

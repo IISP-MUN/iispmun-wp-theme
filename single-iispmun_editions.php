@@ -1,5 +1,9 @@
 <?php get_header();
-$this_post = $post->ID;?>
+global $post;
+global $edition;
+
+$edition = $post;
+?>
 
 <section id="countdown">
     <img src="<?php echo get_template_directory_uri();?>/images/iisp-adminblock-1.jpeg">
@@ -41,6 +45,12 @@ $this_post = $post->ID;?>
                 </div>
                 <div class="timer-subtitle">Minutes</div>
             </div>
+        </div>
+
+        <div class="countdown-dates">
+            <?php
+            echo DateTime::createFromFormat('M j, Y g:i', get_field("start_date") )->format( "D, F j - " );
+            the_field("end_date");?>
         </div>
 
         <div class="countdown-text"><?php the_field("short_description");?></div>
@@ -105,77 +115,37 @@ $this_post = $post->ID;?>
         <div class="theme-description"><p><?php the_field( "theme_description" );?></p></div>
     </div>
     <div><p><?php the_field( "long_description" );?></p></div>
-</section>
 
-<section id="committees">
     <h1><span>IISP MUN</span> Committees</h1>
-    <p><?php the_field( "committees_description" );?></p>
-
-    <div class="container-fluid">
-        <div class="row committees-container">
-            <?php
-            $the_query = new WP_Query( array(
-                'posts_per_page' => -1,
-                'post_type' => 'iispmun_committees') );
-
-            if ( $the_query->have_posts() ) {
-                while ( $the_query->have_posts() ) {
-                    $the_query->the_post();
-                    if ( get_field( "edition" ) == $this_post ) {
-                    ?>
-                        <div class="col-6 col-sm-4 col-md-3 committee">
-                            <div>
-                                <a href="<?php the_permalink();?>">
-                                    <div>
-                                        <img src="<?php the_field( "logo" );?>">
-                                    </div>
-                                    <div><h2><?php the_field( "acronym" );?></h2></div>
-                                </a>
-                            </div>
-                        </div>
-                    <?php
-                    }
-                }
-            }
-            ?>
-        </div>
-    </div>
 </section>
 
-<?php echo do_shortcode("[instagram-feed feed=1]");?>
+<?php
+get_template_part( 'template-parts/template', 'all-committees' );
+echo do_shortcode("[instagram-feed feed=1]");?>
 
 <section id="letters">
-
         <?php
-        $the_query = new WP_Query( array(
-            'posts_per_page' => -1,
-            'post_type' => 'iispmun_people') );
         $people = array();
+        foreach ( get_field( "letters", $edition ) as $person ) {
+            $post = $person;
+            setup_postdata( $post );
+            $people[] = $person;?>
+            <div class="letter-container" style="display: none">
+                <div class="letter-dp">
+                    <a href="<?php the_permalink();?>">
+                        <img src="<?php the_field( "profile_picture" );?>">
+                    </a>
+                </div>
 
-        if ( $the_query->have_posts() ) {
-            while ( $the_query->have_posts() ) {
-                $the_query->the_post();
-                if ( get_field( "edition" ) == $this_post and get_field( "has_letter" ) ) {
-                    array_push( $people, $post->ID )
-                    ?>
-                    <div class="letter-container" style="display: none">
-                        <div class="letter-dp">
-                            <a href="<?php the_permalink();?>">
-                                <img src="<?php the_field( "profile_picture" );?>">
-                            </a>
-                        </div>
-
-                        <div class="letter-text">
-                            <a href="<?php the_permalink();?>">
-                                <span class="name"><?php the_title();?></span>
-                            </a>
-                            <span class="position"><?php the_field( "position" );?></span>
-                            <p class="letter"><?php the_field( "letter" );?></p>
-                        </div>
-                    </div>
-                    <?php
-                }
-            }
+                <div class="letter-text">
+                    <a href="<?php the_permalink();?>">
+                        <span class="name"><?php the_title();?></span>
+                    </a>
+                    <span class="position"><?php the_field( "position" );?></span>
+                    <p class="letter"><?php the_field( "letter" );?></p>
+                </div>
+            </div>
+        <?php
         } ?>
 
     <div class="people-list">
@@ -210,41 +180,21 @@ $this_post = $post->ID;?>
     </script>
 </section>
 
-<section id="press">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-5 thumbnail-container">
-                <a href="<?php the_permalink();?>">
-                    <div class="thumbnail">
-                        <?php
-                        global $post;
-                        $post = wp_get_recent_posts( array( "numberposts" => 1 ) )[0];
-                        setup_postdata( $post );
-                        the_post_thumbnail( $post["ID"], "full" );
-                        ?>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-7 text">
-                <a href="<?php the_permalink();?>">
-                    <h3><?php the_title();?></h3>
-                </a>
-                    <span class="author"><?php the_author();?></span>
-                    <span class="date"><?php the_date();?></span>
+<?php
+$query = new WP_Query( array( "numberposts" => 1, "posts_per_page" => 1, "post_status" => "publish" ) );
+if ( $query->have_posts() ) {
+    while ( $query->have_posts() ) {
+        $query->the_post();
 
-                <?php the_excerpt();?>
-                <a href="<?php the_permalink();?>"><p class="read-more">Read More</p></a>
-            </div>
-        </div>
-    </div>
-</section>
+        get_template_part( 'template-parts/template', 'post-preview' );
+} } ?>
 
 <section id="countries">
     <h2>Countries Represented at Indus</h2>
     <div class="flags-container">
         <?php
-        $images = acf_photo_gallery( 'countries', $this_post );
-        foreach ($images as $image) {?>
+        $images = acf_photo_gallery( "countries", $edition->ID );
+        foreach ( $images as $image ) {?>
             <div class="flag">
                 <img src="<?php echo $image['full_image_url'];?>">
             </div>
