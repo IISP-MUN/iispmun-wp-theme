@@ -14,6 +14,10 @@
         echo $title;?>
     </title>
 
+    <?php if ( is_single() ) {?>
+        <meta name="author" content="<?php the_author();?>">
+    <?php }?>
+
     <meta property="og:title" content="<?php echo $title;?>">
     <meta property="og:site_name" content="IISP Model United Nations">
     <meta property="og:type" content="article">
