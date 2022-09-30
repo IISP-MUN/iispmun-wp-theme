@@ -3,9 +3,9 @@
 Template Name: Committees
 */
 
-get_header();
-
 $edition = get_post( get_field( "edition" ) );
+get_header(null, ['title' =>  'IISP Model United Nations ' . get_the_title( $edition->ID ) . ' Committees - IISP MUN']);
+
 global $edition;?>
 
 <div class="title-container">

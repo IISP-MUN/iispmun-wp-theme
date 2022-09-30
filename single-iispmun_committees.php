@@ -1,4 +1,4 @@
-<?php get_header();?>
+<?php get_header( null, ['title' => get_field( "name" ) . ' - IISP MUN'] );?>
 
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 

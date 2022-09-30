@@ -1,4 +1,4 @@
-<?php get_header();
+<?php get_header( null, ['title' => 'IISP Model United Nations ' . get_the_title() . ' - IISP MUN'] );
 global $post;
 global $edition;
 

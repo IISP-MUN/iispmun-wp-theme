@@ -3,7 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IISP MUN</title>
+
+    <title>
+        <?php if ($args['title']){
+            $title = $args['title'];
+        }
+        else {
+            $title = "IISP MUN";
+        }
+        echo $title;?>
+    </title>
+
+    <meta property="og:title" content="<?php echo $title;?>">
+    <meta property="og:site_name" content="IISP Model United Nations">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="<?php the_post_thumbnail_url();?>">
+    <meta property="og:url" content="<?php the_permalink();?>">
 
     <?php wp_head();?>
 </head>

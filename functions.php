@@ -22,12 +22,12 @@ function load_styles_and_scripts()
         wp_enqueue_style( "committees", get_template_directory_uri() . "/css/committees.css" );
         wp_enqueue_style( "single", get_template_directory_uri() . "/css/single.css" );
     }
-    elseif ( is_singular() ) {
-        wp_enqueue_style( "single", get_template_directory_uri() . "/css/single.css" );
-    }
     elseif ( is_page_template( "templates/committees.php" ) ) {
         wp_enqueue_style( "committees-archive", get_template_directory_uri() . "/css/committees-archive.css" );
         wp_enqueue_style( "committees", get_template_directory_uri() . "/css/committees.css" );
+    }
+    elseif ( is_singular() ) {
+        wp_enqueue_style( "single", get_template_directory_uri() . "/css/single.css" );
     }
 
     wp_enqueue_script("jquery");
