@@ -65,6 +65,7 @@
 @media(max-width: 992px) {
     #press .text {
         margin-top: 40px;
+        padding-right: 40px;
     }
 
     #press .thumbnail {

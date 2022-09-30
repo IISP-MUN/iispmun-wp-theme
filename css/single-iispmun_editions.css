@@ -94,6 +94,10 @@
     text-shadow: 2px 2px 1px rgb(0 0 0 / 30%);
 }
 
+.to {
+    display: none;
+}
+
 .countdown-text {
     color: #fff;
     text-align: center;
@@ -365,6 +369,19 @@
 
     #countdown-timer {
         margin-bottom: 27px;
+    }
+
+    .countdown-dates span:last-child {
+        display: block;
+        text-align: center;
+    }
+
+    .hyphen {
+        display: none;
+    }
+
+    .to {
+        display: inline-block;
     }
 
     .timer-number div {

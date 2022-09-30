@@ -48,9 +48,12 @@ $edition = $post;
         </div>
 
         <div class="countdown-dates">
-            <?php
-            echo DateTime::createFromFormat('M j, Y g:i', get_field("start_date") )->format( "D, F j - " );
-            the_field("end_date");?>
+            <span>
+                <?php echo DateTime::createFromFormat('M j, Y g:i', get_field("start_date") )->format( "D, F j" );?>
+            </span>
+            <span class="to">to</span>
+            <span class="hyphen"> - </span>
+            <span><?php the_field("end_date");?></span>
         </div>
 
         <div class="countdown-text"><?php the_field("short_description");?></div>
