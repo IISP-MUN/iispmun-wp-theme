@@ -22,7 +22,7 @@ function load_styles_and_scripts()
         wp_enqueue_style( "committees", get_template_directory_uri() . "/css/committees.css" );
         wp_enqueue_style( "single", get_template_directory_uri() . "/css/single.css" );
     }
-    elseif ( is_single() ) {
+    elseif ( is_singular() ) {
         wp_enqueue_style( "single", get_template_directory_uri() . "/css/single.css" );
     }
     elseif ( is_page_template( "templates/committees.php" ) ) {
@@ -214,13 +214,18 @@ function filter_ptags_on_images($content){
 }
 add_filter( 'the_content', 'filter_ptags_on_images' );
 
+function filter_wrap_pdfs($content){
+    return preg_replace('/\[pdf-embedder url="(.*)"]/', '<div class="pdf-container" onclick="window.location=\'\1\'">[pdf-embedder url="\1"]</div>', $content);
+}
+add_filter( 'the_content', 'filter_wrap_pdfs' );
+
 add_theme_support( "menus" );
 add_theme_support( "custom-logo" );
 add_theme_support( 'post-thumbnails' );
 
 function load_fonts() {
     wp_enqueue_style(
-        'google-fonts', 'https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900', false );
+        'google-fonts', 'https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900,italic', false );
 
 }
 add_action( 'wp_enqueue_scripts', 'load_fonts' );

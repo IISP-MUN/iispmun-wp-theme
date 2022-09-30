@@ -78,12 +78,18 @@
 }
 
 .blog-content h4 {
-	margin: 20px 0 20px;
+	margin: 20px 0;
 	font-size: 20px;
 	font-weight: 700;
 }
 
-.blog-content h5, h6 {
+.blog-content h5 {
+	margin: 20px 0;
+	font-size: 15px;
+	font-weight: 600;
+}
+
+.blog-content h6 {
 	display: none;
 }
 
@@ -114,6 +120,17 @@
 .blog-content blockquote p {
 	font-style: italic;
 	font-size: 20px;
+}
+
+.pdf-container {
+	display: flex;
+	justify-content: center;
+	margin: 20px 0;
+	transition: all 0.2s ease;
+}
+
+.pdf-container:hover {
+	transform: scale(1.05);
 }
 
 @media(max-width: 768px) {

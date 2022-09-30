@@ -5,16 +5,36 @@
 <div class="blog-header">
     <img src="<?php the_post_thumbnail_url();?>">
     <div class="text">
-        <h1><?php the_title();?></h1>
-        <h4><?php the_author();?></h4>
+        <h1>
+            <?php if ( is_single() ) {
+                the_title();
+            }
+            else {
+                the_field( "title" );
+            }?>
+        </h1>
+        <h4>
+            <?php if ( is_single() ) {
+                the_author();
+            }
+            else {
+                the_field( "subtitle" );
+            }?>
+        </h4>
     </div>
 </div>
 
 <section id="blog">
     <div class="container">
         <div class="blog-content">
-            <h1><?php the_title(); ?></h1>
-            <h5><?php echo get_author_name(); ?></h5>
+            <h1>
+                <?php if ( is_single() ) {
+                    the_title();
+                }
+                else {
+                    the_field( "title" );
+                }?>
+            </h1>
             <?php the_content(); ?>
         </div>
     </div>

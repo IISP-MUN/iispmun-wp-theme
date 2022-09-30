@@ -33,11 +33,23 @@ a:focus {
     outline-offset: 5px;
 }
 
-p {
+p,
+.blog-content ol,
+.blog-content ul {
     text-align: justify;
-    color: #aaa;
+    color: #999;
     line-height: 220%;
     font-size: 15px;
+}
+
+.blog-content ol,
+.blog-content ul {
+    line-height: 170%;
+    margin-left: 50px;
+}
+
+.blog-content li {
+    margin-top: 20px;
 }
 
 h1 {
