@@ -10,6 +10,10 @@
     --blue: #3BA3E8;
 }
 
+body {
+    font-family: "Poppins", sans-serif;
+}
+
 img {
     user-select: none;
     object-fit: cover;

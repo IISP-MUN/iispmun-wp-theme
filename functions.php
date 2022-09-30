@@ -217,3 +217,10 @@ add_filter( 'the_content', 'filter_ptags_on_images' );
 add_theme_support( "menus" );
 add_theme_support( "custom-logo" );
 add_theme_support( 'post-thumbnails' );
+
+function load_fonts() {
+    wp_enqueue_style(
+        'google-fonts', 'https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900', false );
+
+}
+add_action( 'wp_enqueue_scripts', 'load_fonts' );

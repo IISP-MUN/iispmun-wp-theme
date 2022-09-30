@@ -212,6 +212,7 @@
 #letters .people-list {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 
     background-image: linear-gradient(180deg, var(--dark-purple) 50%, var(--darkest-purple) 50%);
     padding: 20px 0;
