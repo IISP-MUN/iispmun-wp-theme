@@ -2,36 +2,11 @@
 
 function load_styles_and_scripts()
 {
-    wp_enqueue_style( "bootstrap", get_template_directory_uri() . "/css/bootstrap/bootstrap.min.css" );
-    wp_enqueue_style( "main", get_template_directory_uri() . "/css/main.css" );
-    wp_enqueue_style( "header", get_template_directory_uri() . "/css/header.css" );
-    wp_enqueue_style( "footer", get_template_directory_uri() . "/css/footer.css" );
-
-    if ( is_front_page() or get_post_type() == "iispmun_editions" ) {
-        wp_enqueue_style( "single-edition", get_template_directory_uri() . "/css/single-iispmun_editions.css" );
-        wp_enqueue_style( "committees", get_template_directory_uri() . "/css/committees.css" );
-        wp_enqueue_style( "post-preview", get_template_directory_uri() . "/css/post-preview.css" );
-    }
-    elseif ( is_home() ) {
-        wp_enqueue_style( "post-preview", get_template_directory_uri() . "/css/post-preview.css" );
-        wp_enqueue_style( "home", get_template_directory_uri() . "/css/home.css" );
-    }
-    elseif ( get_post_type() == "iispmun_committees" ) {
-        wp_enqueue_style( "single-committee", get_template_directory_uri() . "/css/single-iispmun_committees.css" );
-        wp_enqueue_style( "committees-archive", get_template_directory_uri() . "/css/committees-archive.css" );
-        wp_enqueue_style( "committees", get_template_directory_uri() . "/css/committees.css" );
-        wp_enqueue_style( "single", get_template_directory_uri() . "/css/single.css" );
-    }
-    elseif ( is_page_template( "templates/committees.php" ) ) {
-        wp_enqueue_style( "committees-archive", get_template_directory_uri() . "/css/committees-archive.css" );
-        wp_enqueue_style( "committees", get_template_directory_uri() . "/css/committees.css" );
-    }
-    elseif ( is_singular() ) {
-        wp_enqueue_style( "single", get_template_directory_uri() . "/css/single.css" );
-    }
+    wp_enqueue_style( "bootstrap", get_template_directory_uri() . "/assets/css/bootstrap/bootstrap.min.css" );
+    wp_enqueue_style( "main", get_template_directory_uri() . "/assets/css/main.css" );
 
     wp_enqueue_script("jquery");
-    wp_enqueue_script("bootstrap", get_template_directory_uri() . "/js/bootstrap.min.js", "jquery" );
+    wp_enqueue_script("bootstrap", get_template_directory_uri() . "/assets/js/bootstrap.min.js", "jquery" );
 }
 
 function load_custom_post_types()
@@ -39,38 +14,15 @@ function load_custom_post_types()
     register_post_type( "iispmun_editions", array(
             "labels" => array(
                 "name" => "Editions",
-                "singular_name" => "Edition",
-                "add_new" => "New Edition",
-                "add_new_item" => "Add New Edition",
-                "edit_item" => "Edit Edition",
-                "new_item" => "New Edition",
-                "view_item" => "View Edition",
-                "view_items" => "View Editions",
-                "search_items" => "Search Editions",
-                "not_found" => "No editions found",
-                "not_found_in_trash" => "No editions found in trash",
-                "all_items" => "All Editions",
-                "archives" => "Edition Archives",
-                "attributes" => "Edition Attributes",
-                "insert_into_item" => "\Insert into edition",
-                "uploaded_to_this_item" => "Uploaded to this edition",
-                "filter_items_list" => "Filter editions list",
-                "items_list_navigation" => "Editions list navigation",
-                "items_list" => "Editions list",
-                "item_published" => "Edition published",
-                "item_published_privately" => "Edition published privately",
-                "item_reverted_to_draft" => "Edition reverted to draft",
-                "item_scheduled" => "Edition scheduled",
-                "item_updated" => "Edition updated",
-                "item_link" => "Edition Link",
-                "item_link_description" => "A link to an edition"),
+                "singular_name" => "Edition"),
 
             "description" => "All the editions of the IISP MUN",
             "public" => true,
             "menu_icon" => "dashicons-tickets-alt",
-            "supports" => array( "custom-fields", "title" ),
+            "supports" => array( "custom-fields", "title", "editor" ),
             "has_archive" => false,
             "rewrite" => array( "slug" => "mun" ),
+		    "show_in_rest" => true,
         )
     );
 
@@ -229,3 +181,40 @@ function load_fonts() {
 
 }
 add_action( 'wp_enqueue_scripts', 'load_fonts' );
+
+define( 'IISP_MUN_VERSION', wp_get_theme()->get( 'Version' ) );
+
+function iisp_mun_setup() {
+	add_editor_style( './assets/css/style-shared.min.css' );
+
+	$styled_blocks = [ 'button', 'quote' ];
+	foreach ( $styled_blocks as $block_name ) {
+		$args = array(
+			'handle' => "iisp-mun-$block_name",
+			'src'    => get_theme_file_uri( "assets/css/blocks/$block_name.min.css" ),
+			'path'   => get_theme_file_path( "assets/css/blocks/$block_name.min.css" ),
+		);
+		// Replace the "core" prefix if you are styling blocks from plugins.
+		wp_enqueue_block_style( "core/$block_name", $args );
+	}
+}
+add_action( 'after_setup_theme', 'iisp_mun_setup' );
+
+function iisp_mun_styles() {
+	wp_enqueue_style(
+		'iisp-mun-style',
+		get_stylesheet_uri(),
+		[],
+		IISP_MUN_VERSION
+	);
+	wp_enqueue_style(
+		'iisp-mun-shared-styles',
+		get_theme_file_uri( 'assets/css/style-shared.min.css' ),
+		[],
+		IISP_MUN_VERSION
+	);
+}
+add_action( 'wp_enqueue_scripts', 'iisp_mun_styles' );
+
+require_once get_theme_file_path( 'inc/register-block-styles.php' );
+require_once get_theme_file_path( 'inc/register-block-patterns.php' );
