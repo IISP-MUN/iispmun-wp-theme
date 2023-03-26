@@ -71,6 +71,11 @@
                     "name": "Secondary",
                     "slug": "secondary",
                     "color": "#FFCC66"
+                },
+                {
+                    "name": "Blue",
+                    "slug": "blue",
+                    "color": "#3BA3E8"
                 }
             ]
         },
@@ -99,7 +104,7 @@
             "textDecoration": true,
             "textTransform": true,
             "textColumns": true,
-            "customFontSize": false,
+            "customFontSize": true,
             "fontStyle": true,
             "fontWeight": true,
 
@@ -123,7 +128,7 @@
                 },
                 {
                     "slug": "medium",
-                    "size": "1.3rem",
+                    "size": "1.4rem",
                     "name": "Medium"
                 },
                 {
@@ -144,19 +149,13 @@
             ]
         },
         "shadow": {
-            "defaultPresets": true,
-            "presets": [
-
-            ]
+            "defaultPresets": true
         },
         "dimensions": {
             "minHeight": true
         },
         "position": {
             "sticky": true
-        },
-        "custom": {
-
         }
     },
     "styles": {
@@ -176,6 +175,13 @@
                 },
                 "typography": {
                     "fontSize": "var(--wp--preset--font-size--large)"
+                }
+            },
+            "core/image": {
+                "spacing": {
+                    "margin": {
+                        "bottom": "0px"
+                    }
                 }
             }
         },
