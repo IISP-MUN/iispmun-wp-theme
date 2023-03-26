@@ -57,6 +57,14 @@ function iispmun_register_patterns()
             "content" => file_get_contents(get_theme_file_path("patterns/mun-committees.html")),
         )
     );
+
+    register_block_pattern(
+        "iispmun/instagram-feed",
+        array(
+            "title" => __("IISP MUN Instagram Feed", "iispmun"),
+            "content" => file_get_contents(get_theme_file_path("patterns/instagram-feed.html")),
+        )
+    );
 }
 
 add_action("init", "iispmun_register_patterns");
